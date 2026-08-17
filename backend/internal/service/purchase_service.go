@@ -270,7 +270,6 @@ func (s *PurchaseService) Complete(ctx context.Context, id uint) (*model.Purchas
 				return fmt.Errorf("complete purchase order: %w", ierr)
 			}
 			inv.Quantity += it.Quantity
-			inv.Status = computeInventoryStatus(inv.Quantity, inv.MinThreshold, inv.ExpiryDate)
 			if err := tx.Save(inv).Error; err != nil {
 				return fmt.Errorf("complete purchase order: update inventory: %w", err)
 			}

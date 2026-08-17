@@ -40,7 +40,7 @@ func SupplierStatusText(s constants.SupplierStatus) string {
 func InventoryStatusText(s constants.InventoryStatus) string {
 	switch s {
 	case constants.InventoryNormal:
-		return "正常"
+		return "低于预警阈值"
 	case constants.InventoryLow:
 		return "低于预警阈值"
 	case constants.InventoryExpired:
