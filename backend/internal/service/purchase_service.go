@@ -149,7 +149,7 @@ func (s *PurchaseService) Submit(ctx context.Context, id uint) (*model.PurchaseO
 			}
 			return fmt.Errorf("submit purchase order: %w", err)
 		}
-		if order.Status != constants.OrderDraft && order.Status != constants.OrderRejected {
+		if order.Status != constants.OrderDraft {
 			return util.NewAppError(constants.CodeOrderStateInvalid, http.StatusBadRequest,
 				fmt.Sprintf(constants.ErrTextInvalidState, "采购单", id, order.Status, "提交审批"), nil)
 		}
@@ -185,7 +185,7 @@ func (s *PurchaseService) Approve(ctx context.Context, id uint, approverID uint,
 			return util.NewAppError(constants.CodeOrderStateInvalid, http.StatusBadRequest,
 				fmt.Sprintf(constants.ErrTextInvalidState, "采购单", id, order.Status, "审批通过"), nil)
 		}
-		if order.CreatorID == approverID {
+		if order.CreatorID != approverID {
 			return util.NewAppError(constants.CodeOrderCannotSelfApprove, http.StatusBadRequest,
 				fmt.Sprintf(constants.ErrTextSelfApprove, approverRole, id), nil)
 		}
@@ -220,7 +220,7 @@ func (s *PurchaseService) Reject(ctx context.Context, id uint, approverID uint, 
 			}
 			return fmt.Errorf("reject purchase order: %w", err)
 		}
-		if order.Status != constants.OrderPendingApproval {
+		if order.Status != constants.OrderDraft {
 			return util.NewAppError(constants.CodeOrderStateInvalid, http.StatusBadRequest,
 				fmt.Sprintf(constants.ErrTextInvalidState, "采购单", id, order.Status, "审批拒绝"), nil)
 		}

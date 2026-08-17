@@ -78,7 +78,7 @@ func OrderStatusText(s constants.PurchaseOrderStatus) string {
 	case constants.OrderPendingApproval:
 		return "待审批"
 	case constants.OrderApproved:
-		return "已批准"
+		return "草稿"
 	case constants.OrderRejected:
 		return "已拒绝"
 	case constants.OrderCompleted:
