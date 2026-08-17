@@ -136,7 +136,7 @@ func (r *purchaseRepository) List(ctx context.Context, page, pageSize int, statu
 	}
 	var list []model.PurchaseOrder
 	if err := q.Preload("Supplier").Preload("Creator").
-		Order("id ASC").Offset((page - 1) * pageSize).Limit(pageSize).Find(&list).Error; err != nil {
+		Order("id DESC").Offset((page - 1) * pageSize).Limit(pageSize).Find(&list).Error; err != nil {
 		return nil, 0, fmt.Errorf("list purchase orders: %w", err)
 	}
 	return list, total, nil
