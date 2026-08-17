@@ -193,11 +193,13 @@ type UpdateInventoryParams struct {
 }
 
 // computeInventoryStatus 根据余量/阈值/保质期计算库存状态。
+// 保质期到期日当天视为仍在有效期内（"还有一天才过期"不应判为过期），
+// 余量等于预警阈值时仍属正常，仅当严格低于阈值才预警。
 func computeInventoryStatus(quantity, minThreshold float64, expiry time.Time) constants.InventoryStatus {
-	if time.Now().After(expiry.Add(-24 * time.Hour)) {
+	if time.Now().After(expiry) {
 		return constants.InventoryExpired
 	}
-	if quantity <= minThreshold {
+	if quantity < minThreshold {
 		return constants.InventoryLow
 	}
 	return constants.InventoryNormal
