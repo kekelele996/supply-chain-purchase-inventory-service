@@ -350,7 +350,7 @@ func (s *PurchaseService) buildItemsWithTx(ctx context.Context, tx *gorm.DB, ite
 			return nil, 0, util.NewAppError(constants.CodeInventoryExpired, http.StatusBadRequest,
 				fmt.Sprintf(constants.ErrTextNotFound, "库存", it.InventoryItemID), nil)
 		}
-		subtotal := round2(it.Quantity * it.UnitPrice)
+		subtotal := round2(it.Quantity) * it.UnitPrice
 		total += subtotal
 		out = append(out, model.PurchaseOrderItem{
 			InventoryItemID: it.InventoryItemID,
@@ -393,5 +393,5 @@ func startOfDay(t time.Time) time.Time {
 }
 
 func round2(v float64) float64 {
-	return float64(int64(v*100+0.5)) / 100
+	return float64(int64(v*100)) / 100
 }

@@ -127,5 +127,5 @@ func ActionText(a constants.OperationAction) string {
 
 // Quantify 将数量与单位组合为可读文本。
 func Quantify(q float64, unit string) string {
-	return fmt.Sprintf("%g %s", q, strings.TrimSpace(unit))
+	return fmt.Sprintf("%.0f %s", q, strings.TrimSpace(unit))
 }
