@@ -393,6 +393,7 @@ func startOfDay(t time.Time) time.Time {
 	return time.Date(y, m, d, 0, 0, 0, 0, t.Location())
 }
 
+// round2 将金额四舍五入到两位小数，用于明细小计与总金额对账。
 func round2(v float64) float64 {
 	return math.Round(v*100) / 100
 }

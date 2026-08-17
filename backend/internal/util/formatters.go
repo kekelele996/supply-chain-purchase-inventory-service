@@ -1,7 +1,7 @@
 package util
 
 import (
-	"strconv"
+	"fmt"
 	"strings"
 	"time"
 
@@ -125,7 +125,7 @@ func ActionText(a constants.OperationAction) string {
 	return string(a)
 }
 
-// Quantify 将数量与单位组合为可读文本。
+// Quantify 将数量与单位组合为可读文本，保留小数位且不补多余的零。
 func Quantify(q float64, unit string) string {
-	return strconv.FormatFloat(q, 'f', -1, 64) + " " + strings.TrimSpace(unit)
+	return fmt.Sprintf("%g %s", q, strings.TrimSpace(unit))
 }
