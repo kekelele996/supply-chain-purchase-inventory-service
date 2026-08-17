@@ -116,7 +116,7 @@ func ValidPurchaseOrderStatuses() []PurchaseOrderStatus {
 // IsValidPurchaseOrderStatus 校验采购单状态。
 func IsValidPurchaseOrderStatus(s PurchaseOrderStatus) bool {
 	switch s {
-	case OrderDraft, OrderPendingApproval, OrderApproved, OrderCompleted:
+	case OrderDraft, OrderPendingApproval, OrderApproved, OrderRejected, OrderCompleted:
 		return true
 	}
 	return false
