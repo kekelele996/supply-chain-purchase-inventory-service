@@ -95,7 +95,6 @@ func (r *purchaseRepository) FindByID(ctx context.Context, id uint) (*model.Purc
 		Preload("Supplier").
 		Preload("Creator").
 		Preload("Approver").
-		Preload("Items.InventoryItem").
 		First(&order, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, fmt.Errorf("find purchase order id=%d: %w", id, ErrNotFound)
@@ -135,7 +134,7 @@ func (r *purchaseRepository) List(ctx context.Context, page, pageSize int, statu
 		return nil, 0, fmt.Errorf("count purchase orders: %w", err)
 	}
 	var list []model.PurchaseOrder
-	if err := q.Preload("Supplier").Preload("Creator").
+	if err := q.Preload("Supplier").
 		Order("id DESC").Offset((page - 1) * pageSize).Limit(pageSize).Find(&list).Error; err != nil {
 		return nil, 0, fmt.Errorf("list purchase orders: %w", err)
 	}

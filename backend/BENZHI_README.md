@@ -1,4 +1,4 @@
-# supply-chain-purchase-inventory-service
+# supplychain__005
 
 ## 标准命令
 
