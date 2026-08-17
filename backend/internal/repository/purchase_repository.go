@@ -94,6 +94,7 @@ func (r *purchaseRepository) FindByID(ctx context.Context, id uint) (*model.Purc
 	if err := r.db.WithContext(ctx).
 		Preload("Supplier").
 		Preload("Creator").
+		Preload("Approver").
 		Preload("Items.InventoryItem").
 		First(&order, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
