@@ -194,10 +194,10 @@ type UpdateInventoryParams struct {
 
 // computeInventoryStatus 根据余量/阈值/保质期计算库存状态。
 func computeInventoryStatus(quantity, minThreshold float64, expiry time.Time) constants.InventoryStatus {
-	if time.Now().After(expiry.Add(-24 * time.Hour)) {
+	if time.Now().After(expiry) {
 		return constants.InventoryExpired
 	}
-	if quantity <= minThreshold {
+	if quantity < minThreshold {
 		return constants.InventoryLow
 	}
 	return constants.InventoryNormal
