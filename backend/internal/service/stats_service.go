@@ -62,7 +62,7 @@ func (s *StatsService) Summary(ctx context.Context) (map[string]interface{}, err
 	now := time.Now()
 	monthStart := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, now.Location())
 	base := s.db.WithContext(ctx).Model(&model.PurchaseOrder{}).
-		Where("status IN ?", []string{string(constants.OrderApproved), string(constants.OrderCompleted)})
+		Where("status IN ?", []string{string(constants.OrderApproved)})
 
 	var total float64
 	var count int64
