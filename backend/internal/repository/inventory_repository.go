@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"gorm.io/gorm"
 
@@ -125,8 +126,9 @@ func (r *inventoryRepository) ListBySupplier(ctx context.Context, supplierID uin
 
 func (r *inventoryRepository) ListAlerts(ctx context.Context) ([]model.InventoryItem, error) {
 	var list []model.InventoryItem
+	now := time.Now()
 	err := r.db.WithContext(ctx).
-		Where("quantity < min_threshold").
+		Where("quantity < min_threshold OR expiry_date < ?", now.Format("2006-01-02")).
 		Order("expiry_date ASC").
 		Find(&list).Error
 	if err != nil {
