@@ -105,7 +105,7 @@ func (r *inventoryRepository) List(ctx context.Context, page, pageSize int, stat
 		return nil, 0, fmt.Errorf("count inventory: %w", err)
 	}
 	var list []model.InventoryItem
-	if err := q.Order("id DESC").Offset((page - 1) * pageSize).Limit(pageSize).Find(&list).Error; err != nil {
+	if err := q.Preload("Supplier").Order("id DESC").Offset((page - 1) * pageSize).Limit(pageSize).Find(&list).Error; err != nil {
 		return nil, 0, fmt.Errorf("list inventory: %w", err)
 	}
 	return list, total, nil
